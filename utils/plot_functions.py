@@ -125,3 +125,36 @@ def plot_temporal_coverage_heatmap(df: pd.DataFrame, sample_rate='D', selected_c
             margin=dict(l=40, r=40, t=40, b=40),
         )
         return fig
+
+def plot_parallel_coordinates(vectors, features, dataset_names):
+    """
+    Plot parallel coordinates using zero-padded co-coverage vectors.
+
+    Parameters:
+        vectors (list of list of float)
+        features (list): Master feature list
+        dataset_names (list): For color labels
+
+    Returns:
+        go.Figure
+    """
+    dimensions = [
+        dict(
+            label=features[i],
+            values=[row[i] for row in vectors],
+            range=[0, 1]  # or set max dynamically if needed
+        )
+        for i in range(len(features))
+    ]
+
+    fig = go.Figure(
+        data=go.Parcoords(
+            line=dict(color=np.arange(len(vectors)), colorscale="Viridis"),
+            dimensions=dimensions,
+        )
+    )
+    fig.update_layout(
+        title="Parallel Coordinates: Avg Daily Co-Coverage",
+        margin=dict(l=40, r=40, t=40, b=40),
+    )
+    return fig

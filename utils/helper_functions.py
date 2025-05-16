@@ -64,6 +64,32 @@ def get_expected_points_per_interval(original_df, target_freq='D'):
     expected = int(interval_length / median_delta)
     return expected
 
+from utils.co_coverage import compute_partial_co_coverage_vector
+import pandas as pd
+
+def gather_cross_dataset_co_coverage(data_singleton, dataset_names, start_date, end_date, feature_pool):
+    """
+    Collect partial co-coverage vectors (zero-padded) for selected datasets.
+
+    Returns:
+        vectors (list of list of float)
+        successful_names (list of str)
+    """
+    daily_bins = pd.date_range(start=start_date, end=end_date, freq='D')
+    vectors = []
+    names = []
+
+    for name in dataset_names:
+        try:
+            df = data_singleton.get_data(name)
+            vec = compute_partial_co_coverage_vector(df, feature_pool, daily_bins)
+            if vec is not None:
+                vectors.append(vec)
+                names.append(name)
+        except Exception as e:
+            print(f"Skipping {name}: {e}")
+    return vectors, names
+
 if __name__ == "__main__":
     # Example usage
     df = pd.DataFrame({

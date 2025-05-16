@@ -1,28 +1,28 @@
 from utils.datasets.data_singleton import DataSingleton
 
 def get_cali():
-    cali_path = 'path-to-cali-homes-data/IAQ_Monitoring/'
+    cali_path = '/home/lvu/playground/data/California-homes/IAQ_Monitoring/'
     import glob, os
     file_paths = glob.glob(os.path.join(cali_path, '*.csv'))
     return {f'Calihome{index}': file_path for index, file_path in enumerate(file_paths)}
 
 def get_cali2():
-    cali_path = 'path-to-cali-apt-data/IAQ_Activity_Monitoring/'
+    cali_path = '/home/lvu/playground/data/California-apt/IAQ_Activity_Monitoring/'
     import glob, os
     file_paths = glob.glob(os.path.join(cali_path, '*.csv'))
     return {f'Caliapt{index}': file_path for index, file_path in enumerate(file_paths)}
 
 def get_sweden():
     return {
-        'Sweden Bedroom': 'path-to-data/IAQbedroom.txt',
-        'Sweden Livingroom': 'path-to-data/IAQlivingroom.txt',
+        'Sweden Bedroom': '/home/lvu/playground/data/Sweden/IAQbedroom.txt',
+        'Sweden Livingroom': '/home/lvu/playground/data/Sweden/IAQlivingroom.txt',
     }
 
 def get_italy():
     return {
-        'Italy1': 'path-to-data/gold.csv',
-        'Italy2': 'path-to-data/silver.csv',
-        'Italy3': 'path-to-data/brown.csv',
+        'Italy1': '/home/lvu/playground/data/Italy-airport/gold.csv',
+        'Italy2': '/home/lvu/playground/data/Italy-airport/silver.csv',
+        'Italy3': '/home/lvu/playground/data/Italy-airport/brown.csv',
     }
     
 def get_data():
@@ -32,8 +32,8 @@ def get_data():
     """
     data_dict = {
         # 'Sweden': '/home/lvu/playground/data/Sweden/IAQbedroom.txt',
-        'India': 'path-to-data/india.csv',
-        'Mexico': 'path-to-data/Mexico/per-hour.xlsx'
+        'India': '/home/lvu/playground/data/india.csv',
+        'Mexico': '/home/lvu/playground/data/Mexico/per-hour.xlsx'
     }
     cali_data = get_cali()
     caliapt_data = get_cali2()
@@ -46,5 +46,4 @@ def get_data():
     return data_singleton
 
 if __name__ == "__main__":
-    data_singleton = get_data()
-    print(data_singleton.get_data('India'))
+    get_data()
